@@ -72,6 +72,7 @@ module.exports = vuxLoader.merge(webpackConfig, {
   plugins: [
     'vux-ui',
     'progress-bar',
+    {name: 'less-theme', path: 'src/style/vux_theme.less'},
     {
       name: 'duplicate-style',
       options: {

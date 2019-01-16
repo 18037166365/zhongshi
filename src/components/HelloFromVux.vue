@@ -56,8 +56,8 @@ export default {
 </style>
 <style lang="stylus" scoped>
 .box {
-  width: 37rem;
-  height 10rem;
+  width: 375px;
+  height 375px;
   background: red;
 }
 </style>

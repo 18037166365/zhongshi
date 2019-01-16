@@ -14,6 +14,7 @@ export default {
 @import '~vux/src/styles/reset.less';
 
 body {
-  background-color: #fbf9fe;
+  background-color: #f4f4f4;
+  line-height: 1;
 }
 </style>
