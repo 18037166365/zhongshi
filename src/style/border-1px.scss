@@ -1,0 +1,20 @@
+@mixin b1px($c: #EBEDF0){
+  position:relative;
+  &:after{
+      position: absolute;
+      bottom: 0;
+      left:0;
+      content:" ";
+      width: 100%;
+      border-bottom: 1px solid $c;/*no*/
+  }
+  [data-dpr="1"] &:after {
+      // border-bottom: 1px solid $c; /*no*/
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+      -webkit-transform-origin:0 100%;
+      transform-origin:0 100%;
+  }
+}
+
+

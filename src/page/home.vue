@@ -18,6 +18,7 @@
 import YearCard from '@/components/year-card'
 import PersonCenter from '@/components/person-center'
 import { Tabbar, TabbarItem } from 'vux'
+import { mock } from '../api/index.js'
 
   export default {
     components: {
@@ -40,5 +41,14 @@ import { Tabbar, TabbarItem } from 'vux'
         }
       }
     },
+    mounted() {
+    console.log('env', process.env)
+      console.log('mounted')
+      mock({
+        a:1
+      }).then(res => {
+        console.log(res)
+      })
+    }
   }
 </script>

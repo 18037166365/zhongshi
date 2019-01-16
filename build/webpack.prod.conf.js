@@ -11,6 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 const env = require('../config/prod.env')
+// 你看这里env是通过require进来的
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -28,6 +29,9 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    // 然后通过这个插件注入的
+
+    // 更改了配置就需要重启一下
     new webpack.DefinePlugin({
       'process.env': env
     }),

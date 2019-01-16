@@ -3,9 +3,16 @@ import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import App from './App'
 import router from './router'
-import Home from './components/HelloFromVux'
-import  { AlertPlugin } from 'vux'
 
+import Home from './components/HelloFromVux'
+import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin } from 'vux';
+
+//微信title自定义
+Vue.use(require('vue-wechat-title'))
+Vue.use(LoadingPlugin)
+Vue.use(ToastPlugin)
+Vue.use(DatetimePlugin)
+Vue.use(AlertPlugin)
 Vue.use(VueRouter)
 Vue.use(AlertPlugin)
 

@@ -8,7 +8,7 @@
         |  中食全国旅游年卡
       </div>
       <div class="travel-card-content">
-        <div class="travel-card-item">
+        <div class="travel-card-item" @click="goDetail()">
           <img class="cardimg" src="../assets/img/card.png" alt="旅游卡">
           <div class="card-detail">
             <div class="name">中食旅游卡</div>
@@ -22,7 +22,11 @@
 
 <script>
   export default {
-
+    methods: {
+      goDetail() {
+        this.$router.push({path: '/cardDetail', params: {id: 1}})
+      }
+    },
   }
 </script>
 

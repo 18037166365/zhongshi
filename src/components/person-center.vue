@@ -2,7 +2,7 @@
   <div class="main-wrap">
     <div class="header">
       <div class="head-img">
-        <img src="" alt="">
+        <img src="../assets/head.png" alt="">
         <div class="nick">
           <div class="nickname"><i slot="icon" class="iconfont icon-canpinhuihuiyuanv2"></i> xxx</div>
           <!-- <div class="nickname"> 点击登录</div> -->
@@ -38,6 +38,8 @@
           <div>已完成</div>
         </div>
       </div>
+         <CardItem />
+
     </div>
     <div class="my-team">
       <div class="title">
@@ -54,9 +56,12 @@ person-center
 
 <script>
 import { XButton } from 'vux'
+import CardItem from '@/components/card-item';
+
   export default {
     components: {
-      XButton
+      XButton,
+      CardItem
     }
   }
 </script>
@@ -79,7 +84,6 @@ import { XButton } from 'vux'
         width: 71px;
         height: 71px;
         border-radius: 50%;
-        border: 1px solid #bbb;
       }
       .nick {
         text-align: center;
@@ -113,7 +117,7 @@ import { XButton } from 'vux'
       display: flex;
       justify-content: space-between;
       padding: 20px 14px;
-      border-bottom: 1px solid #C0BFC4;
+      @include b1px;
       .open-all {
         color:#999;
         .right {
