@@ -4,7 +4,7 @@
       <tab-item selected @on-item-click="onItemClick">代发货</tab-item>
       <tab-item @on-item-click="onItemClick">已完成</tab-item>
     </tab>
-    <CardItem />
+    <CardItem :type="type"/>
     <!-- my-card
     <qrcode value="https://vux.li?x-page=demo_qrcode" type="img"></qrcode> -->
   </div>
@@ -21,9 +21,15 @@ export default {
     TabItem,
     CardItem
   },
+  data() {
+    return {
+      type: 0
+    }
+  },
   methods: {
      onItemClick (index) {
       console.log('on item click:', index)
+      this.type = index;
     },
   },
 }

@@ -26,8 +26,7 @@
         </div>
       </div>
     </div>
-    <!-- my-card
-    <qrcode value="https://vux.li?x-page=demo_qrcode" type="img"></qrcode> -->
+    <!-- <qrcode value="https://vux.li?x-page=demo_qrcode" type="img"></qrcode> -->
   </div>
 </template>
 

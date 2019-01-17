@@ -6,6 +6,7 @@ import CardDetail from '@/page/card-detail'
 import MyCard from '@/page/my-card'
 import MyTeam from '@/page/my-team'
 import CommissionLog from '@/page/Commission-log'
+import Share from '@/components/share'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/commissionLog',
       name: '我的团队',
       component: CommissionLog
+    },
+    {
+      path: '/Share',
+      name: '分享',
+      component: Share
     },
 
 

@@ -1,18 +1,19 @@
 <template>
   <div class="main-wrap">
     <header>
-      <img src="../assets/img/banner.png" alt="">
     </header>
+      <swiper :list="swiperList"></swiper>
+
     <div class="travel-card">
       <div class="travel-card-title">
         |  中食全国旅游年卡
       </div>
       <div class="travel-card-content">
         <div class="travel-card-item" @click="goDetail()">
-          <img class="cardimg" src="../assets/img/card.png" alt="旅游卡">
+          <img class="cardimg" :src="goodsInfo.goods_img" alt="旅游卡">
           <div class="card-detail">
-            <div class="name">中食旅游卡</div>
-            <div class="money">¥198</div>
+            <div class="name">{{ goodsInfo.goods_name }}</div>
+            <div class="money">¥{{ goodsInfo.goods_price }}</div>
           </div>
         </div>
       </div>
@@ -21,12 +22,40 @@
 </template>
 
 <script>
+import { Swiper } from 'vux'
+import { getIndexBannar, getGoodsInfo } from '../api/index.js'
+
   export default {
+    components: {
+      Swiper
+    },
+    data() {
+      return {
+        swiperList: [],
+        goodsInfo: {}
+      }
+
+    },
     methods: {
       goDetail() {
         this.$router.push({path: '/cardDetail', params: {id: 1}})
+      },
+      init() {
+        getIndexBannar().then(res => {
+          this.swiperList = res.data.map((item) => {
+            return {
+              img: item
+            }
+          })
+        })
+        getGoodsInfo().then(res => {
+          this.goodsInfo = res.data
+        })
       }
     },
+    mounted() {
+      this.init()
+    }
   }
 </script>
 

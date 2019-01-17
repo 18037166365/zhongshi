@@ -2,10 +2,13 @@
   <div class="main-wrap">
     <div class="header">
       <div class="head-img">
-        <img src="../assets/head.png" alt="">
+        <img :src="userInfo.headimguri" alt="">
         <div class="nick">
-          <div class="nickname"><i slot="icon" class="iconfont icon-canpinhuihuiyuanv2"></i> xxx</div>
-          <!-- <div class="nickname"> 点击登录</div> -->
+          <Classname v-if="userInfo.nickname" :level="userInfo.class">
+            {{ userInfo.nickname }}
+          </Classname>
+          <!-- <div class="nickname"><i slot="icon" :class="'icon-canpinhuihuiyuanv' + userInfo.class" class="iconfont"></i> {{ userInfo.nickname }}</div> -->
+          <div v-else class="nickname"> 点击登录</div>
         </div>
       </div>
       <img src="../assets/img/erweima.png" alt="二维码" class="qrcode">
@@ -13,17 +16,17 @@
         <i slot="icon" class="iconfont icon-iconfonterweima"></i>
       </div> -->
       <div class="commission">
-        <div class="title">我的佣金: ¥0</div>
+        <div class="title">我的佣金: ¥{{ userInfo.money }}</div>
         <div class="button-wrap">
           <x-button mini type="primary">提现</x-button>
-          <x-button class="note" mini>日志</x-button>
+          <x-button class="note" mini @click.native="openLog">日志</x-button>
         </div>
       </div>
     </div>
     <div class="year-card">
       <div class="title">
         <b class="left">我的年卡</b>
-        <div class="open-all">
+        <div class="open-all" @click="$router.push('/mycard')">
           查看更多
           <i class="iconfont icon-you right"></i>
         </div>
@@ -38,8 +41,7 @@
           <div>已完成</div>
         </div>
       </div>
-         <CardItem />
-
+      <CardItem />
     </div>
     <div class="my-team">
       <div class="title">
@@ -50,18 +52,37 @@
         </div>
       </div>
     </div>
-person-center
   </div>
 </template>
 
 <script>
 import { XButton } from 'vux'
 import CardItem from '@/components/card-item';
+import { getUserinfo } from '../api/index.js'
+import Classname from './classname'
 
   export default {
+    data() {
+      return {
+        userInfo: {}
+      }
+    },
     components: {
       XButton,
-      CardItem
+      CardItem,
+      Classname
+    },
+    methods: {
+      openLog() {
+        this.$router.push('/commissionLog')
+      }
+    },
+    mounted() {
+      getUserinfo().then(res => {
+        console.log('res: ', res);
+        this.userInfo = res.data
+      })
+
     }
   }
 </script>

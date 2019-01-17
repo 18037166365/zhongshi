@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div class="app-wrapper">
     <component v-bind:is="currentTabComponent"></component>
-    <tabbar @on-index-change="itemChange">
-    <tabbar-item >
-      <i slot="icon" class="iconfont icon-zhuye"></i>
-      <span slot="label">年卡</span>
-    </tabbar-item>
-    <tabbar-item selected>
-      <i slot="icon" class="iconfont icon-gerenzhongxin1"></i>
-      <span slot="label">个人</span>
-    </tabbar-item>
+    <tabbar @on-index-change="itemChange" class="p-fixed">
+      <tabbar-item selected>
+        <i slot="icon" class="iconfont icon-zhuye"></i>
+        <span slot="label">年卡</span>
+      </tabbar-item>
+      <tabbar-item >
+        <i slot="icon" class="iconfont icon-gerenzhongxin1"></i>
+        <span slot="label">个人</span>
+      </tabbar-item>
   </tabbar>
   </div>
 </template>
@@ -18,11 +18,9 @@
 import YearCard from '@/components/year-card'
 import PersonCenter from '@/components/person-center'
 import { Tabbar, TabbarItem } from 'vux'
-import { mock } from '../api/index.js'
 
   export default {
     components: {
-      YearCard,
       Tabbar,
       TabbarItem
     },
@@ -44,11 +42,15 @@ import { mock } from '../api/index.js'
     mounted() {
     console.log('env', process.env)
       console.log('mounted')
-      mock({
-        a:1
-      }).then(res => {
-        console.log(res)
-      })
+
     }
   }
 </script>
+<style lang="scss" scoped>
+.app-wrapper {
+  padding-bottom: 52px;
+  .p-fixed {
+    position: fixed;
+  }
+}
+</style>

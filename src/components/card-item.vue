@@ -1,65 +1,92 @@
 <template>
- <div class="card-wrap">
-      <div class="card-item">
+  <div>
+    <div class="card-wrap">
+      <div class="card-item" v-for="item in listFilter" :key="item.uid" >
         <div class="title">
-          <div class="code">订单编号: 13131231</div>
-          <div class="status">待发货</div>
+          <div class="code">订单编号: {{ item.order_no }}</div>
+          <div class="status">{{item.send_statu=='0'? '待发货': '已发货'}}</div>
         </div>
         <div class="item-content">
-          <img class="goodsImg" src="../assets/logo.png" alt="">
+          <img class="goodsImg" :src="item.goods_img" alt="年卡">
           <div class="detail">
             <div class="top">
-              <div class="name">商品名称</div>
-              <div class="time">2019-01-02 09:00</div>
+              <div class="name">{{ item.goods_name }}</div>
+              <div class="time">{{ item.ctime }}</div>
+            </div>
+            <div class="mid">
+              共 1 件商品, 合计: ¥ {{ item.goods_price }}
             </div>
             <div class="bottom">
-              共1件商品, 合计: ¥ 19.90
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-item">
-        <div class="title">
-          <div class="code">订单编号: 13131231</div>
-          <div class="status">待发货</div>
-        </div>
-        <div class="item-content">
-          <img class="goodsImg" src="../assets/logo.png" alt="">
-          <div class="detail">
-            <div class="top">
-              <b class="name">商品名称</b>
-              <div class="time">2019-01-02 09:00</div>
-            </div>
-            <div class="bottom">
-              共1件商品, 合计: ¥ 19.90
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-item">
-        <div class="title">
-          <div class="code">订单编号: 13131231</div>
-          <div class="status">待发货</div>
-        </div>
-        <div class="item-content">
-          <img class="goodsImg" src="../assets/logo.png" alt="">
-          <div class="detail">
-            <div class="top">
-              <b class="name">商品名称</b>
-              <div class="time">2019-01-02 09:00</div>
-            </div>
-            <div class="bottom">
-              共1件商品, 合计: ¥ 19.90
+              <x-button mini @click.native="activatepen(item)">获取激活码</x-button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+     <div v-transfer-dom>
+      <x-dialog v-model="dialogVisible" class="dialog-demo">
+        <div class="img-box">
+          <img src="https://ws1.sinaimg.cn/large/663d3650gy1fq6824ur1dj20ia0pydlm.jpg" style="max-width:100%">
+        </div>
+        <div @click="dialogVisible=false">
+          <span class="vux-close"></span>
+        </div>
+      </x-dialog>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
+import { getOrders } from '../api/index.js'
+import { XDialog,  XButton} from 'vux'
 
+  export default {
+    components: {
+      XDialog,
+      XButton
+    },
+    props: {
+      type: '',
+    },
+    data() {
+      return {
+        cardList: [],
+        dialogVisible: false
+      }
+    },
+    methods: {
+      activatepen(item) {
+        if(this.$route.path == '/mycard') {
+          // this.dialogVisible= true;
+          this.$vux.alert.show({
+            content: `<p>您的卡号是: ${item.order_no}</p><p>您的激活码是: ${item.wx_order_no}</p>`,
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+            }
+          })
+        }
+        console.log()
+      }
+    },
+    computed: {
+      listFilter() {
+        return this.cardList.filter(item => {
+          if(this.type ==undefined) {
+            return true
+          }
+          return item.send_statu == this.type
+        })
+      }
+    },
+    mounted() {
+      getOrders().then(res => {
+        this.cardList = res.data
+      })
+    }
   }
 </script>
 
@@ -68,6 +95,7 @@
   .card-item {
     margin-top: 10px;
     background: #fff;
+    @include bt1px;
     .title {
       font-size: 13px;
       padding: 14px 19px;
@@ -99,10 +127,17 @@
           display: flex;
           justify-content: space-around;
         }
-        .bottom {
+        .mid {
           display: flex;
           justify-content: flex-end;
           margin-right: 20px;
+        }
+        .bottom {
+          display: flex;
+          justify-content: flex-end;
+          .weui-btn {
+            margin: 0 10px 0;
+          }
         }
       }
     }

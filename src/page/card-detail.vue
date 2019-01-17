@@ -1,24 +1,25 @@
 <template>
   <div class="main-wrap">
-     <swiper :list="swiperList" v-model="currentIndex"></swiper>
+     <swiper :list="swiperList"></swiper>
      <div class="product-name">
        <b class="top">
-         商品名称
+         {{ goodsInfo.goods_name }}
        </b>
        <div class="bottom">
-         <span class="price">¥ 79</span>
+         <span class="price">¥ {{ goodsInfo.goods_price }}</span>
          <div class="detail">虚拟产品不能退换</div>
        </div>
-
      </div>
      <div class="product-detail">
         <div class="title">商品详情</div>
+        <div v-html="goodsInfo.goods_content"></div>
       </div>
   </div>
 </template>
 
 <script>
 import { Swiper } from 'vux'
+import { getGoodsInfo } from '../api/index.js'
 
   export default {
     components: {
@@ -26,26 +27,19 @@ import { Swiper } from 'vux'
     },
     data() {
       return {
-        currentIndex: 0,
-        id: '',
-        swiperList: [{
-          url: 'javascript:',
-          img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
-          title: '送你一朵fua'
-        }, {
-          url: 'javascript:',
-          img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
-          title: '送你一辆车'
-        }, {
-          url: 'javascript:',
-          img: 'https://static.vux.li/demo/5.jpg', // 404
-          title: '送你一次旅行',
-          fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
-        }],
+        goodsInfo: {},
+        swiperList: [],
       }
     },
     mounted() {
-      console.log(this.$router)
+      getGoodsInfo().then(res => {
+        this.swiperList = res.data.goods_bannar.map((item) => {
+            return {
+              img: item
+            }
+          })
+        this.goodsInfo = res.data
+      })
     }
   }
 </script>

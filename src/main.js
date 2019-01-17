@@ -6,6 +6,7 @@ import router from './router'
 
 import Home from './components/HelloFromVux'
 import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin } from 'vux';
+import { TransferDom } from 'vux'
 
 //微信title自定义
 Vue.use(require('vue-wechat-title'))
@@ -15,6 +16,7 @@ Vue.use(DatetimePlugin)
 Vue.use(AlertPlugin)
 Vue.use(VueRouter)
 Vue.use(AlertPlugin)
+Vue.directive('transfer-dom', TransferDom)
 
 const routes = [{
   path: '/',
