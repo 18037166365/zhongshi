@@ -54,10 +54,10 @@ export default {
   height: 100px
 }
 </style>
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
 .box {
   width: 375px;
-  height 375px;
+  height: 375px;
   background: red;
 }
 </style>
