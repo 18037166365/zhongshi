@@ -4,53 +4,76 @@
       <div>我的销售额 ¥ {{ salse }}</div>
       <div>我的佣金额 ¥ {{ rebate }}</div>
     </div>
-    <div class="log-wrap">
-      <div class="log-item" v-for="item in logList" :key="item.id">
-        <div class="top">
-          <div class="left">获得 {{ item.fromuser_classtext }}</div>
-          <div class="mid">
-            <img :src="item.fromuser_headimguri" alt="" class="head">
-            <div class="nick">{{ item.fromuser_name }}</div>
-          </div>
-          <div class="right">
-            <div class="money">
-              <div>的分佣</div>
-              <div class="detail"> ¥ {{ item.money }} </div>
+    <Scroll
+        :data="logList"
+        :pullup="true"
+        :pulldown="pulldown"
+        @pulldown="getdata"
+        @scrollToEnd="scrollToEnd">
+      <div class="log-wrap" ref="wrapper">
+          <div class="log-item" v-for="item in logList" :key="item.id">
+            <div class="top">
+              <div class="left">获得 {{ item.fromuser_classtext }}</div>
+              <div class="mid">
+                <img :src="item.fromuser_headimguri" alt="" class="head">
+                <div class="nick">{{ item.fromuser_name }}</div>
+              </div>
+              <div class="right">
+                <div class="money">
+                  <div>的分佣</div>
+                  <div class="detail"> ¥ {{ item.money }} </div>
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+            {{ item.ctime }}
             </div>
           </div>
         </div>
-        <div class="bottom">
-         {{ item.ctime }}
-        </div>
-      </div>
-    </div>
+    </Scroll>
   </div>
 </template>
 
 <script>
 import { getRebateLog } from '../api/index.js'
+import Scroll from '../components/better-scrool'
 
   export default {
+    components: {
+      Scroll
+    },
     data() {
       return {
+        pulldown: true,
         rebate: '',
         salse: '',
         logList: [],
-        page: 2
+        page: 1,
+        scroll: null
+      }
+    },
+    methods: {
+      scrollToEnd() {
+        console.log('上拉加载');
+        alert('上拉加载')
+      },
+      getdata() {
+        console.log('下拉刷新');
+        alert('下拉刷新')
+        getRebateLog({page: this.page++}).then(res => {
+          this.rebate= res.data.rebate
+          this.salse= res.data.salse
+          this.logList= res.data.data
+        })
       }
     },
     mounted() {
-      getRebateLog({page: this.page}).then(res => {
-        this.rebate= res.data.rebate
-        this.salse= res.data.salse
-        this.logList= res.data.data
-      })
-
-      setTimeout(() => {
-        this.$vux.loading.show({
-         text: 'Loading'
-        })
-      }, 1000);
+      this.getdata()
+      // setTimeout(() => {
+      //   this.$vux.loading.show({
+      //    text: 'Loading'
+      //   })
+      // }, 1000);
     }
   }
 </script>
@@ -74,6 +97,7 @@ import { getRebateLog } from '../api/index.js'
       justify-content: flex-start;
       align-items: flex-start;
       padding: 14px 16px;
+      height:400px;
       @include  b1px;
       .bottom {
         display: flex;
