@@ -35,7 +35,7 @@ import { getRebateLog } from '../api/index.js'
       return {
         rebate: '',
         salse: '',
-        logList: []
+        logList: [],
       }
     },
     mounted() {
@@ -44,6 +44,12 @@ import { getRebateLog } from '../api/index.js'
         this.salse= res.data.salse
         this.logList= res.data.data
       })
+
+      setTimeout(() => {
+        this.$vux.loading.show({
+         text: 'Loading'
+        })
+      }, 1000);
     }
   }
 </script>
@@ -102,4 +108,12 @@ import { getRebateLog } from '../api/index.js'
     }
   }
 }
+</style>
+
+<style>
+  .vux-loading .weui-toast {
+    width: 30% !important;
+    height: auto !important;
+    min-height: 100px !important;
+  }
 </style>
