@@ -1,44 +1,26 @@
 <template>
   <div class="main-wrap">
     <div class="header">
-      <div>我的销售额 ¥788</div>
-      <div>我的佣金额 ¥1788</div>
+      <div>我的销售额 ¥ {{ salse }}</div>
+      <div>我的佣金额 ¥ {{ rebate }}</div>
     </div>
     <div class="log-wrap">
-      <div class="log-item">
+      <div class="log-item" v-for="item in logList" :key="item.id">
         <div class="top">
-          <div class="left">获得黄金会员</div>
+          <div class="left">获得 {{ item.fromuser_classtext }}</div>
           <div class="mid">
-            <img src="../assets/head.png" alt="" class="head">
-            <div class="nick">Maker</div>
+            <img :src="item.fromuser_headimguri" alt="" class="head">
+            <div class="nick">{{ item.fromuser_name }}</div>
           </div>
           <div class="right">
             <div class="money">
               <div>的分佣</div>
-              <div class="detail"> ¥ 99</div>
+              <div class="detail"> ¥ {{ item.money }} </div>
             </div>
           </div>
         </div>
         <div class="bottom">
-          2019-01-03 22:30
-        </div>
-      </div>
-      <div class="log-item">
-        <div class="top">
-          <div class="left">获得黄金会员</div>
-          <div class="mid">
-            <img src="../assets/head.png" alt="" class="head">
-            <div class="nick">Maker</div>
-          </div>
-          <div class="right">
-            <div class="money">
-              <div>的分佣</div>
-              <div class="detail"> ¥ 99</div>
-            </div>
-          </div>
-        </div>
-        <div class="bottom">
-          2019-01-03 22:30
+         {{ item.ctime }}
         </div>
       </div>
     </div>
@@ -46,8 +28,23 @@
 </template>
 
 <script>
-  export default {
+import { getRebateLog } from '../api/index.js'
 
+  export default {
+    data() {
+      return {
+        rebate: '',
+        salse: '',
+        logList: []
+      }
+    },
+    mounted() {
+      getRebateLog().then(res => {
+        this.rebate= res.data.rebate
+        this.salse= res.data.salse
+        this.logList= res.data.data
+      })
+    }
   }
 </script>
 

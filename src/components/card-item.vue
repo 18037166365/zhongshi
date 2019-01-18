@@ -16,7 +16,7 @@
             <div class="mid">
               共 1 件商品, 合计: ¥ {{ item.goods_price }}
             </div>
-            <div class="bottom">
+            <div class="bottom" v-if="activeBtnVisible">
               <x-button mini @click.native="activatepen(item)">获取激活码</x-button>
             </div>
           </div>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getOrders } from '../api/index.js'
+import { getOrders, cardActive } from '../api/index.js'
 import { XDialog,  XButton} from 'vux'
 
   export default {
@@ -62,6 +62,11 @@ import { XDialog,  XButton} from 'vux'
           this.$vux.alert.show({
             content: `<p>您的卡号是: ${item.order_no}</p><p>您的激活码是: ${item.wx_order_no}</p>`,
             onShow () {
+              cardActive({
+                order_id: item.order_no
+              }).then(res => {
+                console.log('res: ', res);
+              })
               console.log('Plugin: I\'m showing')
             },
             onHide () {
@@ -80,6 +85,9 @@ import { XDialog,  XButton} from 'vux'
           }
           return item.send_statu == this.type
         })
+      },
+      activeBtnVisible() {
+        return this.$route.path == '/mycard'
       }
     },
     mounted() {

@@ -39,4 +39,14 @@
     color: #E51C23;
   }
 }
+  .nick {
+    font-size: 14px;
+  }
+  .level {
+    font-size: 13px;
+    margin-top: 5px;
+    &.gold {
+      color: orange;
+    }
+  }
 </style>

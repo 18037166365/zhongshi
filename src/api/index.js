@@ -23,7 +23,11 @@ export const getUserinfo = (params) => http.get('/client/user/userinfo', params)
 
 export const getOrders = (params) => http.get('/client/user/orders', params)
 
-export const cardActive = (params) => http.get('/client/order/active', params)
+export const cardActive = (params) => http.post('/client/order/active', params)
 
+export const getDirectlyRecommended= (params) => http.get('/client/user/down', params)
 
+export const getIndirectRecommended= (params) => http.get('/client/user/all_down', params)
+
+export const getRebateLog= (params) => http.get('/client/user/rebate_log', params)
 

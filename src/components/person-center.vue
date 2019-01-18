@@ -43,7 +43,7 @@
       </div>
       <CardItem />
     </div>
-    <div class="my-team">
+    <div class="my-team" @click="$router.push('/myteam')">
       <div class="title">
         <b class="left">我的团队</b>
         <div class="open-all">
