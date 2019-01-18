@@ -95,8 +95,8 @@
           })
         })
         if (this.type === 'img') {
-        this.img = canvas.toDataURL('image/png')
-      }
+          this.img = canvas.toDataURL('image/png')
+        }
       }
     }
   }

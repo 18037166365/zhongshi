@@ -36,10 +36,11 @@ import { getRebateLog } from '../api/index.js'
         rebate: '',
         salse: '',
         logList: [],
+        page: 2
       }
     },
     mounted() {
-      getRebateLog().then(res => {
+      getRebateLog({page: this.page}).then(res => {
         this.rebate= res.data.rebate
         this.salse= res.data.salse
         this.logList= res.data.data
