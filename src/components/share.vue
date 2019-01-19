@@ -145,7 +145,10 @@
                     canvas.width = CANVAS.width;
                     canvas.height = CANVAS.height;
                     context.clearRect(0, 0, CANVAS.width, CANVAS.height);
-                    context.font = "16px '微软雅黑'";
+                    context.fillStyle = '#fff';
+                    context.fillRect(0,0,CANVAS.width,CANVAS.height)
+                    context.font = "16px '微软雅黑' ";
+                    context.fillStyle = '#000';
                     context.fillText(avatarObj.nickName, AVATAR.width + AVATAT_OFFSET_LEFT + 20 ,AVATAT_OFFSET_TOP + AVATAR.height / 2 + 8);
                     context.drawImage(avatarObj.img, AVATAT_OFFSET_LEFT, AVATAT_OFFSET_TOP, AVATAR.width, AVATAR.height);
                     context.drawImage(qr, (CANVAS.width - QR.width) / 2, 135, QR.width, QR.height);
