@@ -7,7 +7,8 @@ import router from './router'
 import Home from './components/HelloFromVux'
 import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin } from 'vux';
 import { TransferDom } from 'vux'
-
+import './style/index.scss';
+import Loading from './util/loading'
 //微信title自定义
 Vue.use(require('vue-wechat-title'))
 Vue.use(LoadingPlugin)
@@ -26,7 +27,7 @@ const routes = [{
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
-
+Vue.prototype.$loading = Loading;
 /* eslint-disable no-new */
 new Vue({
   router,

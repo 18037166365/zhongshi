@@ -53,9 +53,12 @@
             }
         },
         created() {
+            this.$loading.show()
             this.height = document.documentElement.clientHeight;
-            let qrPromise = this.qrRender()
-            this._getUserInfo(qrPromise)
+            this.qrRender().then(qr => {
+                if (!qr) return
+                return this._getUserInfo(qr)
+            }).then(_ => this.$loading.hide()).catch(_ => this.$loading.hide())
         },
         methods: {
             qrRender() {
@@ -116,8 +119,8 @@
                     img.onerror = e => reject()
                 })
             },
-            _getUserInfo(qrPromise) {
-                getUserinfo().then(res => {
+            _getUserInfo(qr) {
+                return getUserinfo().then(res => {
                     if (res.code === 0) {
                         let headImg = res.data.headimguri;
                         headImg = headImg.replace('https://ss1.bdstatic.com', '/api');
@@ -137,18 +140,16 @@
                     })
                 }).then(avatarObj => {
                     if (!avatarObj) return
-                    qrPromise.then(qr => {
-                        let canvas = document.createElement('canvas');
-                        let context = canvas.getContext('2d');
-                        canvas.width = CANVAS.width;
-                        canvas.height = CANVAS.height;
-                        context.clearRect(0, 0, CANVAS.width, CANVAS.height);
-                        context.font = "16px '微软雅黑'";
-                        context.fillText(avatarObj.nickName, AVATAR.width + AVATAT_OFFSET_LEFT + 20 ,AVATAT_OFFSET_TOP + AVATAR.height / 2 + 8);
-                        context.drawImage(avatarObj.img, AVATAT_OFFSET_LEFT, AVATAT_OFFSET_TOP, AVATAR.width, AVATAR.height);
-                        context.drawImage(qr, (CANVAS.width - QR.width) / 2, 135, QR.width, QR.height);
-                        this.img = canvas.toDataURL('image/png');
-                    })
+                    let canvas = document.createElement('canvas');
+                    let context = canvas.getContext('2d');
+                    canvas.width = CANVAS.width;
+                    canvas.height = CANVAS.height;
+                    context.clearRect(0, 0, CANVAS.width, CANVAS.height);
+                    context.font = "16px '微软雅黑'";
+                    context.fillText(avatarObj.nickName, AVATAR.width + AVATAT_OFFSET_LEFT + 20 ,AVATAT_OFFSET_TOP + AVATAR.height / 2 + 8);
+                    context.drawImage(avatarObj.img, AVATAT_OFFSET_LEFT, AVATAT_OFFSET_TOP, AVATAR.width, AVATAR.height);
+                    context.drawImage(qr, (CANVAS.width - QR.width) / 2, 135, QR.width, QR.height);
+                    this.img = canvas.toDataURL('image/png');
                 })
             }
         }
