@@ -4,23 +4,17 @@ import Vue from 'vue';
 export default class http {
     static handleSuccess(respond) {
         const { data, status } = respond
-            if (status >= 200 && status < 400) {
-                if (!data.success) {
-                    // alert(data.message);
-                    console.log('data', data)
-                    if(data.code !==0) {
-                      this.handleError()
-                      return data
-                    }
-                }
-                return data
-            } else {
-              this.handleError()
+        if (status >= 200 && status < 400) {
+            if (data.code !== 0) {
+                Vue.$vux.toast.text(data.info)
             }
+            return data
+        } else {
+            this.handleError()
+        }
     }
     static handleError() {
-        alert('网络错误');
-        Vue.$vux.toast.text(data)
+        Vue.$vux.toast.text('网络错误')
         return new Error()
     }
     static get(url, data, header) {
