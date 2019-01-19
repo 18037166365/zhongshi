@@ -23,5 +23,9 @@ export default class http {
     static post(url, data, header) {
         return axios.post(url, data).then(this.handleSuccess).catch(this.handleError)
     }
+    static getBlob(link, data = {}) {
+        return axios.get(link, { params: data, responseType: 'blob' })
+            .then(res => URL.createObjectURL(res.data))
+    }
 }
 
