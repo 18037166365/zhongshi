@@ -69,16 +69,8 @@
            _scrollFn() {
                 let orderDom = this.$refs.list;
                 let boxHeight = orderDom.clientHeight;
-                console.log('-----------------------------------------------------------------------------------------');
-                console.log('boxHeight: ', boxHeight);
                 let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-                console.log('scrollTop: ', scrollTop);
                 let offset = boxHeight + orderDom.offsetTop - scrollTop - this.height;
-                console.log('offset: ', offset);
-                console.log('this.height: ', this.height);
-                console.log('scrollTop: ', scrollTop);
-                console.log('orderDom.offsetTop: ', orderDom.offsetTop);
-                console.log('boxHeight: ', boxHeight);
                 if (offset <= 0 && this.canBePullDown) {
                     this.canBePullDown = false;
                     this.page++;

@@ -31,3 +31,4 @@ export const getIndirectRecommended= (params) => http.get('/client/user/all_down
 
 export const getRebateLog= (params) => http.get('/client/user/rebate_log', params)
 
+export const getBlob = (url) => http.getBlob(url)

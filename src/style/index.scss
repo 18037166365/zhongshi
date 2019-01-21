@@ -1,0 +1,81 @@
+.tao-loading{
+    position: fixed;
+    left:0;
+    right:0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    background: rgba(250,250,250,0.8);
+    z-index: 2018;
+    &::before{
+        display: inline-block;
+        width:0;
+        height: 100%;
+        content: " ";
+        vertical-align: middle;
+    }
+    .tao-box{
+        display: inline-block;
+        vertical-align: middle;
+        color: #45CD99;
+       
+        .circular {
+            width: 42px;
+            height: 42px;
+            animation: tao-rotate 2s linear infinite;
+            -webkit-animation: tao-rotate 2s linear infinite;
+        }
+        .path {
+            animation: loading-dash 1.5s ease-in-out infinite;
+            stroke-dasharray: 90,150;
+            stroke-dashoffset: 0;
+            stroke-width: 2;
+            stroke: #45CD99;
+            stroke-linecap: round;
+        }
+        .circle{
+            font-size: 26px;
+        }
+        .tao-text{
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+    }
+}
+@keyframes loading-dash{
+    0% {
+        stroke-dasharray: 1,200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -40px;
+    }
+    100% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -120px;
+    }
+}
+@keyframes tao-rotate {
+    0%  {
+        transform: rotate(0)
+    }
+    50% {
+        transform: rotate(180deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+@-webkit-keyframes tao-rotate {
+    0%  {
+        transform: rotate(0)
+    }
+    50% {
+        transform: rotate(180deg)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
