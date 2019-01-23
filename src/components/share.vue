@@ -3,7 +3,7 @@
         <div class="mask"></div>
         <div class="wrap">
             <img :src="img" alt="" class="img">
-            <a :href="img" download class="download" @click.prevent.stop="save">点击保存到相册</a>
+            <a :href="img" download class="download" @click.prevent.stop="save">长按保存二维码到相册</a>
         </div>
     </div>
 </template>
