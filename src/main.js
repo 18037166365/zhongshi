@@ -3,7 +3,7 @@ import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import App from './App'
 import router from './router'
-
+import 'amfe-flexible';
 import Home from './components/HelloFromVux'
 import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin } from 'vux';
 import { TransferDom } from 'vux'
