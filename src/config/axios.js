@@ -9,6 +9,7 @@ export default class http {
                 window.open('http://0010.94lang.com/client/login/index', '_self');
             } else if (data.code !== 0) {
                 Vue.$vux.toast.text(data.info)
+
             }
             return data
         } else {
