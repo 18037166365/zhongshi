@@ -3,7 +3,11 @@
         <div class="mask"></div>
         <div class="wrap">
             <img :src="img" alt="" class="img">
-            <a :href="img" download class="download" @click.prevent.stop="save">点击保存到相册</a>
+            <div class="download">
+                <img :src="img" alt="" class="cover">
+                <span>长按该按钮保存到相册</span>
+            </div>
+            <!-- <a :href="img" download class="download" @click.prevent.stop="save">点击保存到相册</a> -->
         </div>
     </div>
 </template>
@@ -63,7 +67,8 @@
         methods: {
             save() {
                 console.log('save')
-                window.open(this.img, '_self')
+                location.href = this.img
+                // window.open(this.img, '_self')
             },
             close() {
                 this.$emit('close')
@@ -201,6 +206,7 @@
             color: #888;
         }
         .download {
+            position: relative;
             margin: 20px;
             display: inline-block;
             color: #fff;
@@ -209,6 +215,14 @@
             background: #6a8ff6;
             border-radius: 5px;
             border: 1px solid #fff;
+            overflow: hidden;
+            .cover {
+                position: absolute;
+                top: 0; 
+                left: 0;
+                width: 100%;
+                opacity: 0;
+            }
         }
     }
 
