@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Vue from 'vue';
-
+const { PREFIX } = process.env
 export default class http {
     static handleSuccess(respond) {
         const { data, status } = respond
@@ -21,9 +21,11 @@ export default class http {
         return new Error()
     }
     static get(url, data, header) {
+        url = PREFIX + url;
         return axios.get(url, {params: data}).then(this.handleSuccess).catch(this.handleError)
     }
     static post(url, data, header) {
+        url = PREFIX + url;
         return axios.post(url, data).then(this.handleSuccess).catch(this.handleError)
     }
     static getBlob(link, data = {}) {
