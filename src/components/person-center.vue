@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <Ewm-dialog v-show="ewmVisible" :value="ewmLink" @close="closeDialog"/>
+    <Ewm-dialog v-show="ewmVisible" :nickname="userInfo.nickname" :headimg="userInfo.headimguri" :value="ewmLink" @close="closeDialog"/>
   </div>
 </template>
 

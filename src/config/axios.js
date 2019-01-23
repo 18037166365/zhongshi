@@ -1,11 +1,13 @@
 import axios from 'axios';
 import Vue from 'vue';
+import { operateStorage } from '../config/util';
 
 export default class http {
     static handleSuccess(respond) {
         const { data, status } = respond
         if (status >= 200 && status < 400) {
             if (data.code === 25) {
+                operateStorage('token', 25)
                 window.open('http://0010.94lang.com/client/login/index', '_self');
             } else if (data.code !== 0) {
                 Vue.$vux.toast.text(data.info)
