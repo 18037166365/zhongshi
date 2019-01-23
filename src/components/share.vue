@@ -1,7 +1,8 @@
 <template>
-    <div class="bg" :style="{'min-height': height + 'px'}" @click.stop="close">
+    <div class="bg" :style="{'min-height': height + 'px'}" >
         <div class="mask"></div>
         <div class="wrap">
+        <i slot="icon" class="iconfont icon-icon-test" @click.stop="close"></i>
             <img :src="img" alt="" class="img">
             <div class="download">
                 <img :src="img" alt="" class="cover">
@@ -196,6 +197,13 @@
             width: 80%;
             vertical-align: middle;
             border-radius: 5px;
+            position: relative;
+            i {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                font-size: 20px;
+            }
         }
         .img {
             width: 100%;
@@ -218,7 +226,7 @@
             overflow: hidden;
             .cover {
                 position: absolute;
-                top: 0; 
+                top: 0;
                 left: 0;
                 width: 100%;
                 opacity: 0;

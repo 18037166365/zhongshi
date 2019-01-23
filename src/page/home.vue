@@ -19,7 +19,7 @@ import YearCard from '@/components/year-card'
 import PersonCenter from '@/components/person-center'
 import { Tabbar, TabbarItem } from 'vux'
 import { login } from '../api/index.js'
-import { getQuery } from '../config/util.js'
+import { getQuery,operateStorage } from '../config/util.js'
 
 
   export default {
@@ -42,10 +42,13 @@ import { getQuery } from '../config/util.js'
         }
       },
       login() {
+          console.log(getQuery('token'))
+          console.log(operateStorage('token' =='25'))
           if(getQuery('token')) {
                 login({
-                    token: getQuery('token')
+                    token: encodeURI( getQuery('token'))
                 }).then(res => {
+                    location.href = location.href.split('?token')[0]
                     console.log('res: ', res);
                 })
           }

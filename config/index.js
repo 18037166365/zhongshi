@@ -84,6 +84,22 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
+    proxyTable: {
+        '/client': {
+            target: 'http://0010.94lang.com/apis',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/client': '/client'
+            }
+        },
+        '/api': {
+          target: 'https://ss1.bdstatic.com/apis',
+          changeOrigin: true,
+          pathRewrite: {
+              '^/api': ''
+          }
+      },
+     },
   }
 }
