@@ -15,6 +15,7 @@
 // import {get, post} from '../config/fetch'
 import  http from '../config/axios'
 
+
 export const getIndexBannar = (params) => http.get('/client/index/index_bannar', params)
 
 export const getGoodsInfo = (params) => http.get('/client/index/goods_info', params)
@@ -32,3 +33,6 @@ export const getIndirectRecommended= (params) => http.get('/client/user/all_down
 export const getRebateLog= (params) => http.get('/client/user/rebate_log', params)
 
 export const getBlob = (url) => http.getBlob(url)
+
+export const login= (params) => http.get('/client/index/login', params)
+

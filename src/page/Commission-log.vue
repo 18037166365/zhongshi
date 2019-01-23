@@ -1,8 +1,8 @@
 <template>
     <div class="main-wrap">
         <div class="header">
-            <div>我的销售额 ¥ {{ salse }}</div>
-            <div>我的佣金额 ¥ {{ rebate }}</div>
+            <div>我的销售额 ¥ {{ salse || 0 }}</div>
+            <div>我的佣金额 ¥ {{ rebate || 0 }}</div>
         </div>
         <div class="log-wrap" ref="list">
             <div class="log-item" v-for="item in logList" :key="item.id">

@@ -11,7 +11,7 @@
           <div v-else class="nickname"> 点击登录</div>
         </div>
       </div>
-      <img src="../assets/img/erweima.png" alt="二维码" class="qrcode">
+      <img src="../assets/img/erweima.png" alt="二维码" class="qrcode" @click="openEwm">
       <!-- <div class="qrcode">
         <i slot="icon" class="iconfont icon-iconfonterweima"></i>
       </div> -->
@@ -52,6 +52,7 @@
         </div>
       </div>
     </div>
+    <Ewm-dialog v-show="ewmVisible" :value="ewmLink" @close="closeDialog"/>
   </div>
 </template>
 
@@ -60,22 +61,37 @@ import { XButton } from 'vux'
 import CardItem from '@/components/card-item';
 import { getUserinfo } from '../api/index.js'
 import Classname from './classname'
+import EwmDialog from '../components/share'
 
   export default {
     data() {
       return {
-        userInfo: {}
+        userInfo: {},
+        ewmVisible: false,
       }
     },
     components: {
       XButton,
       CardItem,
-      Classname
+      Classname,
+      EwmDialog
     },
     methods: {
+        openEwm() {
+            this.ewmVisible = true
+        },
+        closeDialog() {
+            console.log('close')
+            this.ewmVisible = false
+        },
       openLog() {
         this.$router.push('/commissionLog')
       }
+    },
+    computed: {
+        ewmLink() {
+            return 'http://0010.94lang.com/client/login/index?recom_id=' + this.userInfo.id
+        }
     },
     mounted() {
       getUserinfo().then(res => {

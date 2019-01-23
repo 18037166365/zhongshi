@@ -1,9 +1,9 @@
 <template>
-    <div class="bg" :style="{'min-height': height + 'px'}">
+    <div class="bg" :style="{'min-height': height + 'px'}" @click.stop="close">
+        <div class="mask"></div>
         <div class="wrap">
             <img :src="img" alt="" class="img">
-            <!-- <p class="tip">扫描上方二维码</p> -->
-            <a :href="img" download class="download">点击保存到相册</a>
+            <a :href="img" download class="download" @click.prevent.stop="save">点击保存到相册</a>
         </div>
     </div>
 </template>
@@ -61,6 +61,13 @@
             }).then(_ => this.$loading.hide()).catch(_ => this.$loading.hide())
         },
         methods: {
+            save() {
+                console.log('save')
+                window.open(this.img, '_self')
+            },
+            close() {
+                this.$emit('close')
+            },
             qrRender() {
                 const getBackingStorePixelRatio = function (ctx) {
                     return (
@@ -123,12 +130,12 @@
                 return getUserinfo().then(res => {
                     if (res.code === 0) {
                         let headImg = res.data.headimguri;
-                        headImg = headImg.replace('https://ss1.bdstatic.com', '/api');
+                        // headImg = headImg.replace('https://ss1.bdstatic.com', '/api');
                         let nickName = res.data.nickname;
                         return { headImg, nickName }
                     }
                 }).then(o => {
-                    if (!o) return 
+                    if (!o) return
                     return getBlob(o.headImg).then(res => {
                         let img = document.createElement('img');
                         img.src = res;
@@ -151,7 +158,7 @@
                     context.fillStyle = '#000';
                     context.fillText(avatarObj.nickName, AVATAR.width + AVATAT_OFFSET_LEFT + 20 ,AVATAT_OFFSET_TOP + AVATAR.height / 2 + 8);
                     context.textAlign = 'center';
-                    context.fillText('扫描上方二维码', CANVAS.width / 2 , CANVAS.height - 20 );
+                    context.fillText('扫描上方二维码,购买中食旅游年卡', CANVAS.width / 2 , CANVAS.height - 20 );
                     context.drawImage(avatarObj.img, AVATAT_OFFSET_LEFT, AVATAT_OFFSET_TOP, AVATAR.width, AVATAR.height);
                     context.drawImage(qr, (CANVAS.width - QR.width) / 2, 135, QR.width, QR.height);
                     this.img = canvas.toDataURL('image/png');
@@ -184,7 +191,7 @@
             width: 80%;
             vertical-align: middle;
             border-radius: 5px;
-        }   
+        }
         .img {
             width: 100%;
         }

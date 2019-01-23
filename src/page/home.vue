@@ -18,6 +18,9 @@
 import YearCard from '@/components/year-card'
 import PersonCenter from '@/components/person-center'
 import { Tabbar, TabbarItem } from 'vux'
+import { login } from '../api/index.js'
+import { getQuery } from '../config/util.js'
+
 
   export default {
     components: {
@@ -37,12 +40,21 @@ import { Tabbar, TabbarItem } from 'vux'
         }else {
           this.currentTabComponent = PersonCenter
         }
+      },
+      login() {
+          if(getQuery('token')) {
+                login({
+                    token: getQuery('token')
+                }).then(res => {
+                    console.log('res: ', res);
+                })
+          }
       }
     },
     mounted() {
     console.log('env', process.env)
       console.log('mounted')
-
+        this.login()
     }
   }
 </script>
