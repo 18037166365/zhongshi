@@ -122,7 +122,6 @@
                     display: flex;
                     justify-content: flex-end;
                     width: 100%;
-                    height: 300px;
                 }
 
                 .top {

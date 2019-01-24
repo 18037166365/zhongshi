@@ -36,3 +36,5 @@ export const getBlob = (url) => http.getBlob(url)
 
 export const login= (params) => http.get('/client/index/login', params)
 
+export const createOrderAndPay= (params) => http.get('/client/pay/createOrderAndPay', params)
+

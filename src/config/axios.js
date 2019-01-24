@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Vue from 'vue';
-const { PREFIX } = process.env
+const { PREFIX="" } = process.env
 import { operateStorage } from '../config/util';
 
 export default class http {

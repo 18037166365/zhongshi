@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <Ewm-dialog v-show="ewmVisible" :nickname="userInfo.nickname" :headimg="userInfo.headimguri" :value="ewmLink" @close="closeDialog"/>
+    <Ewm-dialog v-if="ewmVisible" :nickname="userInfo.nickname" :headimg="userInfo.headimguri" :value="ewmLink" @close="closeDialog"/>
   </div>
 </template>
 
@@ -67,6 +67,7 @@ import EwmDialog from '../components/share'
     data() {
       return {
         userInfo: {},
+        id: '',
         ewmVisible: false,
       }
     },
@@ -90,13 +91,24 @@ import EwmDialog from '../components/share'
     },
     computed: {
         ewmLink() {
-            return 'http://0010.94lang.com/client/login/index?recom_id=' + this.userInfo.id
+            console.log('this.id: ',this.id);
+            console.log('this.userInfo: ',this.userInfo);
+            return 'http://0010.94lang.com/client/login/index?recom_id=' + this.id
+        }
+    },
+    watch: {
+        id(a,b) {
+            this.id=a
+            console.log(a,b)
         }
     },
     mounted() {
       getUserinfo().then(res => {
         console.log('res: ', res);
         this.userInfo = res.data
+        this.id= res.data.id
+            console.log('this.userInfo.id: ',this.id);
+
       })
 
     }

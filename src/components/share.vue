@@ -25,6 +25,9 @@
         getUserinfo, getBlob
     } from '../api'
     export default {
+        mounted() {
+            console.log('this.value: ', this.value)
+        },
         props: {
             value: {
                 type: String,
