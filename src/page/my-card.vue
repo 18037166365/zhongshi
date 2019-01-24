@@ -1,7 +1,7 @@
 <template>
   <div>
     <tab>
-      <tab-item selected @on-item-click="onItemClick">代发货</tab-item>
+      <tab-item selected @on-item-click="onItemClick">待发货</tab-item>
       <tab-item @on-item-click="onItemClick">已完成</tab-item>
     </tab>
     <CardItem :type="type"/>

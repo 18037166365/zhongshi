@@ -59,8 +59,14 @@ import { XDialog,  XButton} from 'vux'
       activatepen(item) {
         if(this.$route.path == '/mycard') {
           // this.dialogVisible= true;
+          var contentStr = ''
+           if(!item.member_no) {
+                contentStr= '发货后才能查看激活码'
+            }else {
+                contentStr= `<p>您的卡号是: ${item.member_no || '无'}</p><p>您的激活码是: ${item.active_code || '无'}</p>`
+            }
           this.$vux.alert.show({
-            content: `<p>您的卡号是: ${item.order_no}</p><p>您的激活码是: ${item.wx_order_no}</p>`,
+            content: contentStr,
             onShow () {
               cardActive({
                 order_id: item.order_no
@@ -124,6 +130,7 @@ import { XDialog,  XButton} from 'vux'
       .goodsImg {
         width: 113px;
         height: 90px;
+        border-radius: 3px;
       }
       .detail {
         display: flex;
