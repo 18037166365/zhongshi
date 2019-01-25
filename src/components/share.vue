@@ -30,8 +30,7 @@
         },
         props: {
             value: {
-                type: String,
-                default: 'http://www.baidu.com'
+                type: String
             },
             size: {
                 type: Number,
@@ -201,6 +200,7 @@
             vertical-align: middle;
             border-radius: 5px;
             position: relative;
+            margin-top: -50px;
             i {
                 position: absolute;
                 right: 10px;

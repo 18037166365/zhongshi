@@ -82,7 +82,7 @@ import EwmDialog from '../components/share'
             this.ewmVisible = true
         },
         closeDialog() {
-            console.log('close')
+            // console.log('close')
             this.ewmVisible = false
         },
       openLog() {
@@ -91,23 +91,23 @@ import EwmDialog from '../components/share'
     },
     computed: {
         ewmLink() {
-            console.log('this.id: ',this.id);
-            console.log('this.userInfo: ',this.userInfo);
+            // console.log('this.id: ',this.id);
+            // console.log('this.userInfo: ',this.userInfo);
             return 'http://0010.94lang.com/client/login/index?recom_id=' + this.id
         }
     },
     watch: {
         id(a,b) {
             this.id=a
-            console.log(a,b)
+            // console.log(a,b)
         }
     },
     mounted() {
       getUserinfo().then(res => {
-        console.log('res: ', res);
+        // console.log('res: ', res);
         this.userInfo = res.data
         this.id= res.data.id
-            console.log('this.userInfo.id: ',this.id);
+            // console.log('this.userInfo.id: ',this.id);
 
       })
 

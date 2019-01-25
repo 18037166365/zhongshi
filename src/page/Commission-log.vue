@@ -23,6 +23,7 @@
                     {{ item.ctime }}
                 </div>
             </div>
+            <div class="empty" v-if="!logList.length">暂无数据</div>
         </div>
     </div>
 </template>
@@ -54,6 +55,7 @@
         },
         methods: {
             _getList() {
+                this.$loading.show();
                 return getRebateLog({page: this.page}).then(res => {
                     if (res.code === 0) {
                         let result = res.data;
@@ -64,7 +66,10 @@
                         }
                         return res.data
                     }
-                })
+                }).then(_ => {
+                    this.$loading.hide();
+                    return _
+                }).catch(_ => this.$loading.hide())
             },
            _scrollFn() {
                 let orderDom = this.$refs.list;
@@ -92,7 +97,12 @@
     .main-wrap {
         font-size: 14px;
         color: #101010;
-
+        .empty {
+            text-align: center;
+            color: #888;
+            background: #f4f4f4;
+            margin-top: 80px;
+        }
         .header {
             position: fixed;
             left:0;

@@ -1,4 +1,5 @@
 const TOKEN_KEY = '_token_';
+import { login } from '../api/index.js'
 
 export function getToken() {
     let TOKEN = sessionStorage.getItem(TOKEN_KEY);
@@ -16,20 +17,22 @@ export function getToken() {
             theRequest.token && sessionStorage.setItem(TOKEN_KEY, JSON.stringify(theRequest))
         }
         TOKEN = theRequest
-        // if (!theRequest.token) {
-        //     alert('返回参数错误')
-        //     return
-        // }
-
-        // let { href } = window.location;
-        // let newHref = href;
-        // let reg = /\?token=\S+\&?/;
-        // if (reg.test(newHref)) {
-        //     newHref = newHref.replace(reg, '')
-        // }
-        // if (newHref !== href) {
-        //     location.replace(newHref)
-        // }
+        
+        if (TOKEN.token) {
+            login({token: TOKEN.token})
+        }
+        let { href } = window.location;
+        let newHref = href;
+        let reg = /\?token=\S+\&?/;
+        if (reg.test(newHref)) {
+            newHref = newHref.replace(reg, '')
+        }
+        if (newHref !== href) {
+            location.replace(newHref)
+        }
     }
     return typeof TOKEN === 'object' ? TOKEN : JSON.parse(TOKEN)
+}
+export function removeToken() {
+    sessionStorage.removeItem(TOKEN_KEY)
 }
