@@ -2,11 +2,11 @@
   <div class="app-wrapper">
     <component v-bind:is="currentTabComponent"></component>
     <tabbar @on-index-change="itemChange" class="p-fixed">
-      <tabbar-item selected>
+      <tabbar-item>
         <i slot="icon" class="iconfont icon-zhuye"></i>
         <span slot="label">年卡</span>
       </tabbar-item>
-      <tabbar-item >
+      <tabbar-item ref="acc">
         <i slot="icon" class="iconfont icon-gerenzhongxin1"></i>
         <span slot="label">个人</span>
       </tabbar-item>
@@ -55,6 +55,16 @@ import { getQuery,operateStorage } from '../config/util.js'
       }
     },
     mounted() {
+        console.log('this.$route.query')
+        console.log(this.$route.query)
+        console.log(this.$route.query.aaa)
+        if(this.$route.query.aaa==='my') {
+            this.currentTabComponent = PersonCenter
+            console.log( this.$refs['acc'])
+            this.$refs['acc'].$attrs.set('checked', true)
+            location.href = location.href.split('?aaa')[0]
+        }
+        console.log()
     console.log('env', process.env)
       console.log('mounted')
         this.login()

@@ -10,7 +10,9 @@ import Share from '@/components/share'
 
 Vue.use(Router)
 
-export default new Router({
+
+
+ const router = new Router({
   routes: [
     // {
     //   path: '/',
@@ -56,3 +58,20 @@ export default new Router({
     // },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+    console.log('from:', from)
+    if(from.fullPath === '/mycard'){
+        if(to.query.aaa) return next()
+        console.log('aaa')
+        next({
+            path: to.path,
+            query: {aaa:'my'}
+          })
+        return
+    }
+    next()
+  // ...
+})
+
+export default router
