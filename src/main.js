@@ -8,6 +8,7 @@ import Home from './components/HelloFromVux'
 import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin } from 'vux';
 import { TransferDom } from 'vux'
 import './style/index.scss';
+import './style/iconfont.css'
 import 'amfe-flexible'
 import Loading from './util/loading'
 //微信title自定义

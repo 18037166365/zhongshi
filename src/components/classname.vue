@@ -18,7 +18,7 @@
     },
     computed: {
       iconname() {
-        return 'icon-canpinhuihuiyuanv' + this.level
+        return 'icon-canpinhuihuiyuanv' + Number(this.level)
       },
       type() {
         return 'v' + this.level

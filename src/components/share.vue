@@ -71,7 +71,7 @@
             save() {
                 console.log('save')
                 location.href = this.img
-                // window.open(this.img, '_self')
+                // location.replace(this.img, '_self')
             },
             close() {
                 this.$emit('close')

@@ -2,11 +2,11 @@
     <div class="app-wrapper">
         <component v-bind:is="currentTabComponent"></component>
         <tabbar @on-index-change="itemChange" class="p-fixed">
-            <tabbar-item>
+            <tabbar-item :selected="tabSelect===1">
                 <i slot="icon" class="iconfont icon-zhuye"></i>
                 <span slot="label">年卡</span>
             </tabbar-item>
-            <tabbar-item ref="acc">
+            <tabbar-item ref="acc" :selected="tabSelect===2">
                 <i slot="icon" class="iconfont icon-gerenzhongxin1"></i>
                 <span slot="label">个人</span>
             </tabbar-item>
@@ -28,15 +28,22 @@
             TabbarItem
         },
         beforeRouteEnter(to, from, next) {
-            if (from.path === '/myteam' || from.path === '/mycard') {
+            if (from.path === '/myteam' || from.path === '/mycard' || from.path === '/commissionLog') {
                 CURRENT_COMPONENT = PersonCenter;
+                next(vm=>{
+                    vm.tabSelect=2;
+                })
             } else {
                 CURRENT_COMPONENT = YearCard
+                 next(vm=>{
+                    vm.tabSelect=1;
+                })
             }
-            next()
+
         },
         data() {
             return {
+                tabSelect: 1,
                 currentTabComponent: CURRENT_COMPONENT
             }
         },
@@ -55,6 +62,7 @@
             // }
         },
         mounted() {
+            // console.log('this.$route.params.a: ', this.$route.params.a)
             // this.login()
         }
     }

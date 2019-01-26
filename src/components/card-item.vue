@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card-wrap">
-      <div class="card-item" v-for="item in listFilter" :key="item.uid" >
+      <div class="card-item" v-for="item in listFilter" :key="item.id" >
         <div class="title">
           <div class="code">订单编号: {{ item.order_no }}</div>
           <div class="status">{{item.send_statu=='0'? '待发货': '已发货'}}</div>
@@ -16,7 +16,7 @@
             <div class="mid">
               共 1 件商品, 合计: ¥ {{ item.goods_price }}
             </div>
-            <div class="bottom" v-if="activeBtnVisible">
+            <div class="bottom" v-if="activeBtnVisible && item.send_statu==1">
               <x-button mini @click.native="activatepen(item)">获取激活码</x-button>
             </div>
           </div>

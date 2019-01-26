@@ -10,9 +10,13 @@
     import { getToken} from './util/token';
     export default {
         name: 'app',
-        beforeCreate() {
+        // beforeCreate() {
+            created(){
             let TOKEN = getToken();
+            console.log(TOKEN)
             if (!TOKEN.token) {
+                console.log('login')
+                console.log(process.env.REDIRECT_URL)
                 location.replace(process.env.REDIRECT_URL)
             }
         }

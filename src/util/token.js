@@ -17,7 +17,7 @@ export function getToken() {
             theRequest.token && sessionStorage.setItem(TOKEN_KEY, JSON.stringify(theRequest))
         }
         TOKEN = theRequest
-        
+
         if (TOKEN.token) {
             login({token: TOKEN.token})
         }

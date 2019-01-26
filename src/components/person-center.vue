@@ -7,7 +7,6 @@
           <Classname v-if="userInfo.nickname" :level="userInfo.class">
             {{ userInfo.nickname }}
           </Classname>
-          <!-- <div class="nickname"><i slot="icon" :class="'icon-canpinhuihuiyuanv' + userInfo.class" class="iconfont"></i> {{ userInfo.nickname }}</div> -->
           <div v-else class="nickname"> 点击登录</div>
         </div>
       </div>
