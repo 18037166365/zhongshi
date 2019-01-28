@@ -5,6 +5,6 @@ const prodEnv = require('./prod.env')
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   PREFIX: '""',
-  REDIRECT_URL: '"http://http://192.168.1.3:8089/#/client/login/index"'
+  REDIRECT_URL: '"http://0010.94lang.com/client/login/index"'
 })
 

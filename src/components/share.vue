@@ -1,5 +1,5 @@
 <template>
-    <div class="bg" :style="{'min-height': height + 'px'}" >
+    <div class="bg" :style="{'min-height': height + 'px'}" @touchmove.prevent>
         <div class="mask"></div>
         <div class="wrap">
         <i slot="icon" class="iconfont icon-icon-test" @click.stop="close"></i>
@@ -138,19 +138,39 @@
                 return getUserinfo().then(res => {
                     if (res.code === 0) {
                         let headImg = res.data.headimguri;
-                        // headImg = headImg.replace('https://ss1.bdstatic.com', '/api');
                         let nickName = res.data.nickname;
                         return { headImg, nickName }
                     }
                 }).then(o => {
                     if (!o) return
-                    return getBlob(o.headImg).then(res => {
+                     const isIos = !!navigator.userAgent.match(/(iPhone|iPod|iPad);?/i);
+                    let avatarUrl = o.headImg;
+                    let validAvatarUrl = isIos ? avatarUrl : '/mmopen' + avatarUrl.split('/mmopen')[1];
+                    return getBlob(avatarUrl).then(res => {
                         let img = document.createElement('img');
                         img.src = res;
                         img.width = AVATAR.width;
                         return new Promise((reslove, reject) => {
                             img.onload = _ => reslove({img, nickName: o.nickName})
                             img.onerror = e => reject()
+                        })
+                    }).catch( _ => {
+                        return getBlob(validAvatarUrl).then(objectUrl => {
+                            if (!objectUrl) return
+                            let img = document.createElement('img');
+                            img.src = objectUrl;
+                            return new Promise((resolve, reject) => {
+                                img.onload = e => resolve({img, nickName: o.nickName});
+                                img.onerror = e =>  reject()
+                            })
+                        })
+                    }).catch(_ => {
+                        let url = require('../assets/avatar.png');
+                        let img = document.createElement('img');
+                        img.src = url;
+                        return new Promise((resolve, reject) => {
+                            img.onload = e => resolve({img, nickName: o.nickName});
+                            img.onerror = e =>  reject()
                         })
                     })
                 }).then(avatarObj => {
@@ -168,9 +188,8 @@
                     context.textAlign = 'center';
                     context.fillText('扫描上方二维码,购买中食旅游年卡', CANVAS.width / 2 , CANVAS.height - 20 );
                     context.drawImage(avatarObj.img, AVATAT_OFFSET_LEFT, AVATAT_OFFSET_TOP, AVATAR.width, AVATAR.height);
-                    context.drawImage(qr, (CANVAS.width - QR.width) / 2, 135, QR.width, QR.height);
+                    context.drawImage(qr, (CANVAS.width - QR.width) / 2, 125, QR.width, QR.height);
                     this.img = canvas.toDataURL('image/png');
-
                 })
             }
         }
@@ -210,6 +229,7 @@
         }
         .img {
             width: 100%;
+            border-radius: 5px;
         }
         .tip {
             font-size: 14px;

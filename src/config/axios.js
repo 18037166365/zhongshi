@@ -1,24 +1,29 @@
 import axios from 'axios';
 import Vue from 'vue';
-const { PREFIX="" } = process.env
+const { PREFIX } = process.env
 import { removeToken } from '../util/token';
 
 export default class http {
     static handleSuccess(respond) {
         const { data, status } = respond
-        // if (status >= 200 && status < 400) {
+        if (status >= 200 && status < 400) {
             if (data.code === 25) {
                 removeToken()
                 location.replace(process.env.REDIRECT_URL)
             } else if(data.code != 0) {
-                Vue.$vux.toast.text(data.info)
+                Vue.$vux.alert.show({
+                    content: data.info
+                })
+                // Vue.$vux.toast.text(data.info)
             }
             return data
-        // }
+        }
     }
     static handleError() {
-        console.log('网络错误')
-        // Vue.$vux.toast.text('网络错误')
+        // console.log('网络错误')
+        Vue.$vux.alert.show({
+            content: '网络错误，请稍后重试'
+        })
         return new Error()
     }
     static get(url, data, header) {
