@@ -11,7 +11,7 @@
     export default {
         name: 'app',
         // beforeCreate() {
-            created(){
+            mounted(){
             let TOKEN = getToken();
             console.log(TOKEN)
             if (!TOKEN.token) {
@@ -25,6 +25,8 @@
 
 <style lang="less">
     @import '~vux/src/styles/reset.less';
+    @import './style/iconfont.css';
+
     body {
         background-color: #f4f4f4;
         line-height: 1;

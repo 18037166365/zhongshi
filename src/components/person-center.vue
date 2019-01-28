@@ -10,7 +10,7 @@
           <div v-else class="nickname"> 点击登录</div>
         </div>
       </div>
-      <img src="../assets/img/erweima.png" alt="二维码" class="qrcode" @click="openEwm">
+      <!-- <img src="../assets/img/erweima.png" alt="二维码" class="qrcode" @click="openEwm"> -->
       <!-- <div class="qrcode">
         <i slot="icon" class="iconfont icon-iconfonterweima"></i>
       </div> -->
@@ -19,6 +19,15 @@
         <div class="button-wrap">
           <x-button mini type="primary">提现</x-button>
           <x-button class="note" mini @click.native="openLog">日志</x-button>
+        </div>
+      </div>
+    </div>
+     <div class="my-qrcode" >
+      <div class="title">
+        <b class="left">我的二维码</b>
+        <div class="open-all" @click="openEwm">
+          查看我的二维码
+          <i class="iconfont icon-you right"></i>
         </div>
       </div>
     </div>
@@ -156,7 +165,7 @@ import EwmDialog from '../components/share'
       }
     }
   }
-  .year-card, .my-team {
+  .year-card, .my-team ,.my-qrcode{
     margin-top: 10px;
     background: #fff;
     .title {

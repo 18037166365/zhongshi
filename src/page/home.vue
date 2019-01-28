@@ -75,3 +75,6 @@
         }
     }
 </style>
+<style lang="scss">
+    @import '../style/iconfont.css';
+</style>
