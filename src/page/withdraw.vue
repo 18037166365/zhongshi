@@ -41,6 +41,7 @@ export default {
                     this.$vux.alert.show({
                         content: '提现成功'
                     })
+                    this.$router.push('/')
                 }
             })
         }
