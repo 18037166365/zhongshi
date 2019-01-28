@@ -6,6 +6,7 @@ import MyCard from '@/page/my-card'
 import MyTeam from '@/page/my-team'
 import CommissionLog from '@/page/Commission-log'
 import Share from '@/components/share'
+import withdraw from '@/page/withdraw'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ Vue.use(Router)
       path: '/Share',
       name: '分享',
       component: Share
+    },
+    {
+      path: '/withdraw',
+      name: 'withdraw',
+      component: withdraw
     }
   ]
 })

@@ -38,3 +38,8 @@ export const login= (params) => http.get('/client/index/login', params)
 
 export const createOrderAndPay= (params) => http.get('/client/pay/createOrderAndPay', params)
 
+/**
+ *  提现
+ * @param {*} {fee : 提现金额}
+ */
+export const withdrawApi = data => http.post('/client/withdraw/index', data)

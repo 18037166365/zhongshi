@@ -17,7 +17,7 @@
       <div class="commission">
         <div class="title">我的佣金: ¥{{ userInfo.money }}</div>
         <div class="button-wrap">
-          <x-button mini type="primary">提现</x-button>
+          <x-button mini type="primary" @click.native="withdraw">提现</x-button>
           <x-button class="note" mini @click.native="openLog">日志</x-button>
         </div>
       </div>
@@ -70,6 +70,7 @@ import CardItem from '@/components/card-item';
 import { getUserinfo } from '../api/index.js'
 import Classname from './classname'
 import EwmDialog from '../components/share'
+import { userInfo } from 'os';
 
   export default {
     data() {
@@ -95,6 +96,12 @@ import EwmDialog from '../components/share'
         },
       openLog() {
         this.$router.push('/commissionLog')
+      },
+      withdraw() {
+        this.$router.push({
+          name: 'withdraw',
+          params: {money: this.userInfo.money}
+        })
       }
     },
     computed: {
