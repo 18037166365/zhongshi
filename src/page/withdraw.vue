@@ -36,6 +36,7 @@ export default {
                     content: '提现金额不能大于可用金额'
                 })
             }
+            this.$loading.show()
             withdrawApi({fee: this.value}).then(res => {
                 if (res.code === 0) {
                     this.$vux.alert.show({
@@ -43,7 +44,8 @@ export default {
                     })
                     this.$router.push('/')
                 }
-            })
+            }).then(_ => this.$loading.hide())
+            .catch(_ => this.$loading.hide())
         }
     }
 }
