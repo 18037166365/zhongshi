@@ -1,6 +1,6 @@
 <template>
     <div class="main-wrap">
-        <swiper :list="swiperList"></swiper>
+        <swiper :list="swiperList" :auto="true" :loop="true"></swiper>
         <div class="product-name">
             <b class="top">
                 {{ goodsInfo.goods_name }}

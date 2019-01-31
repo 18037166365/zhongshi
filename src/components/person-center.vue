@@ -4,8 +4,9 @@
       <div class="head-img">
         <img v-if="userInfo.headimguri" :src="userInfo.headimguri" alt="">
         <div class="nick">
-          <Classname v-if="userInfo.nickname" :level="userInfo.class" :classname="userInfo.class_text">
-             {{ userInfo.nickname }}
+          <!-- <Classname v-if="userInfo.nickname" :level="userInfo.class" :classname="userInfo.class_text"> -->
+          <Classname v-if="userInfo.nickname" :level="3" classname="至尊会员">
+              <p class="nickname">{{ userInfo.nickname }}</p>
           </Classname>
           <!-- <div v-else class="nickname"> 点击登录</div> -->
         </div>
@@ -142,9 +143,15 @@ import { userInfo } from 'os';
 </script>
 
 <style scoped lang="scss">
+.nickname {
+    color: #101010;
+    margin-top: 5px;
+    text-align: center;
+}
 .main-wrap {
   .header {
-    height: 110px;
+    height: auto;
+    padding-bottom: 10px;
     padding-top: 10px;
     display: flex;
     justify-content: space-between;
@@ -161,7 +168,7 @@ import { userInfo } from 'os';
         border-radius: 50%;
       }
       .nick {
-        text-align: center;
+        text-align: left;
         margin-top: 8px;
       }
     }
@@ -173,6 +180,7 @@ import { userInfo } from 'os';
     .commission {
       margin-top: 21px;
       margin-right: 19px;
+      flex-shrink: 0;
       .title {
         text-align: center;
       }

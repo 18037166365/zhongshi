@@ -51,6 +51,14 @@ import { getIndexBannar, getGoodsInfo } from '../api/index.js'
         getGoodsInfo().then(res => {
           this.goodsInfo = res.data
         })
+        //  getGoodsInfo().then(res => {
+        //     this.swiperList = res.data.goods_bannar.map((item) => {
+        //         return {
+        //             img: item
+        //         }
+        //     })
+        //     this.goodsInfo = res.data
+        // })
       }
     },
     mounted() {

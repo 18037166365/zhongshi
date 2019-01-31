@@ -100,7 +100,7 @@
                     }
                     console.log('res.data.list: ', res.data.list )
                     return res.data.list
-                    })
+                })
                 .then(_ => {
                     this.$loading.hide();
                     return _
@@ -182,24 +182,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            // height: 700px;
-
             .head {
                 width: 58px;
                 height: 58px;
                 border-radius: 50%;
+                flex-shrink: 0;
             }
 
             .mid {
                 min-width: 100px;
+                padding-left: 10px;
+                padding-right: 10px;
                 .nick {
                     font-size: 14px;
                 }
-
                 .level {
                     font-size: 13px;
                     margin-top: 5px;
-
                     &.gold {
                         color: orange;
                     }
@@ -209,6 +208,9 @@
             .jointime {
                 font-size: 13px;
                 color: #101010;
+                flex-shrink: 0;
+                min-width: 140px;
+                text-align: center;
             }
         }
         .empty {
