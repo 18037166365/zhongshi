@@ -29,4 +29,7 @@
     .vux-tab-ink-bar {
         transform: scaleX(0.5);
     }
+    .weui-cells {
+        font-size: 14px;
+    }
 </style>

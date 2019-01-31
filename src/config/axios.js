@@ -3,6 +3,7 @@ import Vue from 'vue';
 const { PREFIX } = process.env
 import { removeToken } from '../util/token';
 
+axios.defaults.timeout =  30000;
 export default class http {
     static handleSuccess(respond) {
         const { data, status } = respond
@@ -10,6 +11,7 @@ export default class http {
             if (data.code === 25) {
                 removeToken()
                 location.replace(process.env.REDIRECT_URL)
+                window.location.href = process.env.REDIRECT_URL+ '?time='+((new Date()).getTime());
             } else if(data.code != 0) {
                 Vue.$vux.alert.show({
                     content: data.info
@@ -20,9 +22,9 @@ export default class http {
         }
     }
     static handleError() {
-        // console.log('网络错误')
         Vue.$vux.alert.show({
-            content: '网络错误，请稍后重试'
+            title: '错误',
+            content: '网络错误，请刷新重试'
         })
         return new Error()
     }

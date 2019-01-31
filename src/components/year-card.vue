@@ -10,7 +10,7 @@
       </div>
       <div class="travel-card-content">
         <div class="travel-card-item" @click="goDetail()">
-          <img class="cardimg" :src="goodsInfo.goods_img" alt="旅游卡">
+          <img class="cardimg" :src="goodsInfo.goods_img" alt="">
           <div class="card-detail">
             <div class="name">{{ goodsInfo.goods_name }}</div>
             <div class="money">¥{{ goodsInfo.goods_price }}</div>

@@ -2,23 +2,32 @@
   <div class="main-wrap">
     <div class="header">
       <div class="head-img">
-        <img :src="userInfo.headimguri" alt="">
+        <img v-if="userInfo.headimguri" :src="userInfo.headimguri" alt="">
         <div class="nick">
           <Classname v-if="userInfo.nickname" :level="userInfo.class">
-            {{ userInfo.nickname }}
+           {{userInfo.class>0?' v'+userInfo.class:''}}  {{ userInfo.nickname }}
           </Classname>
-          <div v-else class="nickname"> 点击登录</div>
+          <!-- <div v-else class="nickname"> 点击登录</div> -->
         </div>
       </div>
       <!-- <img src="../assets/img/erweima.png" alt="二维码" class="qrcode" @click="openEwm"> -->
       <!-- <div class="qrcode">
         <i slot="icon" class="iconfont icon-iconfonterweima"></i>
       </div> -->
-      <div class="commission">
+      <div class="commission" v-if="userInfo">
         <div class="title">我的佣金: ¥{{ userInfo.money }}</div>
         <div class="button-wrap">
           <x-button mini type="primary" @click.native="withdraw">提现</x-button>
           <x-button class="note" mini @click.native="openLog">日志</x-button>
+        </div>
+      </div>
+    </div>
+    <div class="my-team" @click="$router.push('/myteam')">
+      <div class="title">
+        <b class="left">我的团队</b>
+        <div class="open-all">
+          查看更多
+          <i class="iconfont icon-you right"></i>
         </div>
       </div>
     </div>
@@ -39,7 +48,7 @@
           <i class="iconfont icon-you right"></i>
         </div>
       </div>
-      <div class="choose">
+      <!-- <div class="choose">
         <div class="tosend">
           <i class="iconfont icon-daifahuo"></i>
           <div>待发货</div>
@@ -48,18 +57,10 @@
           <i class="iconfont icon-dingdanyiwancheng"></i>
           <div>已完成</div>
         </div>
-      </div>
+      </div> -->
       <CardItem />
     </div>
-    <div class="my-team" @click="$router.push('/myteam')">
-      <div class="title">
-        <b class="left">我的团队</b>
-        <div class="open-all">
-          查看更多
-          <i class="iconfont icon-you right"></i>
-        </div>
-      </div>
-    </div>
+
     <Ewm-dialog v-if="ewmVisible" :nickname="userInfo.nickname" :headimg="userInfo.headimguri" :value="ewmLink" @close="closeDialog"/>
   </div>
 </template>
@@ -88,7 +89,14 @@ import { userInfo } from 'os';
     },
     methods: {
         openEwm() {
-            this.ewmVisible = true
+            if(this.userInfo.class>0){
+                this.ewmVisible = true
+            }else {
+                this.$vux.alert.show({
+                    title: '提示',
+                    content: '您还不是会员,无法获取二维码',
+                })
+            }
         },
         closeDialog() {
             // console.log('close')
@@ -120,6 +128,9 @@ import { userInfo } from 'os';
     mounted() {
       getUserinfo().then(res => {
         // console.log('res: ', res);
+        // this.$vux.alert.show({
+        //     content: JSON.stringify(res),
+        //   })
         this.userInfo = res.data
         this.id= res.data.id
             // console.log('this.userInfo.id: ',this.id);

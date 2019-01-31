@@ -28,7 +28,7 @@
             TabbarItem
         },
         beforeRouteEnter(to, from, next) {
-            if (from.path === '/myteam' || from.path === '/mycard' || from.path === '/commissionLog') {
+            if (from.path === '/myteam' || from.path === '/mycard' || from.path === '/commissionLog'|| from.path ==='/withdraw') {
                 CURRENT_COMPONENT = PersonCenter;
                 next(vm=>{
                     vm.tabSelect=2;

@@ -42,3 +42,13 @@ export const trim = String => {
   const result = String.replace(/\s/g, "");
   return result;
 };
+
+export const getIndex = (item ,arr) => {
+        var i = arr.length;
+        while (i--) {
+            if (arr[i] === item) {
+                return i;
+            }
+        }
+        return -1;
+}

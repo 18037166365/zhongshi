@@ -1,23 +1,31 @@
 <template>
     <div>
-        <tab>
-            <tab-item selected @on-item-click="onItemClick">直接推荐</tab-item>
-            <tab-item @on-item-click="onItemClick">间接推荐</tab-item>
-        </tab>
+        <div class="header">
+            <tab class="tab">
+                <tab-item selected @on-item-click="onItemClick">直接推荐</tab-item>
+                <tab-item @on-item-click="onItemClick">间接推荐</tab-item>
+            </tab>
+            <group class="selector" label-width="4em">
+                <popup-picker title="等级" :data="pickerList" v-model="pickerValue" @on-change="onChange" placeholder="请选择会员等级"></popup-picker>
+            </group>
+        </div>
         <div class="card-wrap">
-            <div class="card-item" v-for="item in teamList" :key="item.pid">
-                <img :src="item.headimguri" alt="头像" class="head">
-                <div class="mid">
-                    <div class="nick">{{ item.nickname }}</div>
-                    <Classname class="level" :level="item.class">
-                        {{ item.class_text }}
-                    </Classname>
+            <div class="listWrap" ref="list">
+                <div class="card-item" v-for="item in showList" :key="item.id">
+                    <img :src="item.headimguri" alt="" class="head">
+                    <div class="mid">
+                        <div class="nick">{{ item.nickname }}</div>
+                        <Classname class="level" :level="item.class">
+                            {{ item.class_text }}
+                        </Classname>
+                    </div>
+                    <div class="jointime">
+                        {{ item.ctime || '未知'}}
+                    </div>
                 </div>
-                <div class="jointime">
-                    {{ item.ctime || '未知'}}
-                </div>
+                <div class="empty" v-if="!teamList.length">暂无推荐结果</div>
             </div>
-            <div class="empty" v-if="!teamList.length">暂无推荐结果</div>
+
             <!-- <div class="card-item">
         <img src="../assets/head.png" alt="头像" class="head">
         <div class="mid">
@@ -37,46 +45,136 @@
     import {
         Qrcode,
         Tab,
-        TabItem
+        TabItem,
+        PopupPicker,
+        XInput,
+        XButton,
+        Group
     } from 'vux'
     import {
         getDirectlyRecommended,
         getIndirectRecommended
     } from '../api/index.js'
     import Classname from '../components/classname.vue'
-
+    import { getIndex } from '../config/util.js'
+    const PAGE_SIZE = 10;
     export default {
         components: {
             Qrcode,
             Tab,
             TabItem,
-            Classname
+            Classname,
+            PopupPicker,
+            Group
         },
         data() {
             return {
-                teamList: []
+                pickerValue: ['全部'],
+                pickerList: [['全部','游客', '黄金会员', '钻石会员', '至尊会员']],
+                teamList: [],
+                canBePullDown: true,
+                page: 1,
+                height: null,
+                type: 0
             }
         },
         methods: {
-            onItemClick(index) {
-                this.getMyitem(index)
+            onChange() {
+                console.log('this.pickerValue: ', this.pickerValue[0]);
             },
-            getMyitem(type) {
-                let promise = type && type === 1 ? getIndirectRecommended() : getDirectlyRecommended();
+            onItemClick(index) {
+                this.type= index
+                this.page =1
+                this.teamList= []
+                this.canBePullDown =true
+                this.getListSingle()
+            },
+            getMyitem() {
+                let promise = this.type === 1 ? getIndirectRecommended({page: this.page}) : getDirectlyRecommended({page: this.page});
                 this.$loading.show();
-                promise.then(res => this.teamList = res.data)
-                .then(_ => this.$loading.hide())
+                return  promise.then(res => {
+                    console.log('promise_res: ', res);
+                    // this.teamList = res.data.list
+                    if (res.data.list.length >= PAGE_SIZE) {
+                        this.canBePullDown = true
+                    }
+                    console.log('res.data.list: ', res.data.list )
+                    return res.data.list
+                    })
+                .then(_ => {
+                    this.$loading.hide();
+                    return _
+                })
                 .catch(_ => this.$loading.hide())
+            },
+             _scrollFn() {
+                 console.log('__scrollFn')
+                let orderDom = this.$refs.list;
+
+                let boxHeight = orderDom.clientHeight;
+                let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                let offset = boxHeight + orderDom.offsetTop - scrollTop - this.height;
+                console.log('this.height: ', this.height);
+                console.log('scrollTop: ', scrollTop);
+                console.log('boxHeight: ', boxHeight);
+                console.log('orderDom.offsetTop: ', orderDom.offsetTop);
+                console.log('canBePullDown: ', this.canBePullDown);
+                console.log('offset: ', offset);
+                if (offset <= 0 && this.canBePullDown) {
+                    this.canBePullDown = false;
+                    this.page++;
+                    this.getMyitem().then(respond => {
+                        console.log('respond: ', respond);
+                        if (!respond) return;
+                        this.teamList = [...this.teamList, ...respond]
+                    })
+                }
+            },
+            getListSingle() {
+                this.getMyitem().then(respond => {
+                    console.log('created: respond: ', respond);
+                    if (!respond) return
+                    this.teamList = respond
+                })
+            }
+        },
+        computed: {
+            showList() {
+                return this.teamList.filter(item => {
+                    // console.log(this.pickerValue[0])
+                    if(this.pickerValue[0]=='全部') {
+                        return item
+                    }else {
+                        // console.log('item.class_text: ', item.class_text);
+                        return item.class_text==this.pickerValue[0]
+                    }
+                })
             }
         },
         mounted() {
-            this.getMyitem(0)
+            this.height = document.documentElement.clientHeight;
+            this.page = 1;
+            this.getListSingle()
+            document.addEventListener('scroll', this._scrollFn)
+            // this.getMyitem(0)
+        },
+         beforeRouteLeave(to, from, next) {
+            document.removeEventListener('scroll', this._scrollFn);
+            next()
         }
     }
 </script>
 
 <style lang="scss" scoped>
+.header{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #f4f4f4;
+}
     .card-wrap {
+        margin-top: 110px;
         .card-item {
             margin-top: 10px;
             padding: 12px 25px;
@@ -84,6 +182,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            // height: 700px;
 
             .head {
                 width: 58px;
@@ -92,6 +191,7 @@
             }
 
             .mid {
+                min-width: 100px;
                 .nick {
                     font-size: 14px;
                 }

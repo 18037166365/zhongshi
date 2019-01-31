@@ -72,6 +72,7 @@
                 }).catch(_ => this.$loading.hide())
             },
            _scrollFn() {
+               debugger
                 let orderDom = this.$refs.list;
                 let boxHeight = orderDom.clientHeight;
                 let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;

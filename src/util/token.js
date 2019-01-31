@@ -29,6 +29,7 @@ export function getToken() {
         }
         if (newHref !== href) {
             location.replace(newHref)
+            window.location.href = newHref+ '?time='+((new Date()).getTime());
         }
     }
     return typeof TOKEN === 'object' ? TOKEN : JSON.parse(TOKEN)
