@@ -2,7 +2,7 @@
   <div class="main-wrap">
     <header>
     </header>
-      <swiper :list="swiperList"></swiper>
+      <swiper :list="swiperList" :auto="true" :loop="true"></swiper>
 
     <div class="travel-card">
       <div class="travel-card-title">

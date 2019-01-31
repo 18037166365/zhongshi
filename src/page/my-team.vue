@@ -5,8 +5,8 @@
                 <tab-item selected @on-item-click="onItemClick">直接推荐</tab-item>
                 <tab-item @on-item-click="onItemClick">间接推荐</tab-item>
             </tab>
-            <group class="selector" label-width="4em">
-                <popup-picker title="等级" :data="pickerList" v-model="pickerValue" @on-change="onChange" placeholder="请选择会员等级"></popup-picker>
+            <group class="selector" label-width="8em">
+                <popup-picker title="按等级筛选" :data="pickerList" v-model="pickerValue" @on-change="onChange" placeholder="请选择会员等级"></popup-picker>
             </group>
         </div>
         <div class="card-wrap">
@@ -15,8 +15,8 @@
                     <img :src="item.headimguri" alt="" class="head">
                     <div class="mid">
                         <div class="nick">{{ item.nickname }}</div>
-                        <Classname class="level" :level="item.class">
-                            {{ item.class_text }}
+                        <Classname class="level" :level="item.class" :classname="item.class_text">
+                            <!-- {{ item.class_text }} -->
                         </Classname>
                     </div>
                     <div class="jointime">

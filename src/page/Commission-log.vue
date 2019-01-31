@@ -66,10 +66,12 @@
                         }
                         return res.data
                     }
-                }).then(_ => {
+                 })
+                .then(_ => {
                     this.$loading.hide();
                     return _
-                }).catch(_ => this.$loading.hide())
+                })
+                .catch(_ => this.$loading.hide())
             },
            _scrollFn() {
                debugger

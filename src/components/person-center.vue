@@ -4,8 +4,8 @@
       <div class="head-img">
         <img v-if="userInfo.headimguri" :src="userInfo.headimguri" alt="">
         <div class="nick">
-          <Classname v-if="userInfo.nickname" :level="userInfo.class">
-           {{userInfo.class>0?' v'+userInfo.class:''}}  {{ userInfo.nickname }}
+          <Classname v-if="userInfo.nickname" :level="userInfo.class" :classname="userInfo.class_text">
+             {{ userInfo.nickname }}
           </Classname>
           <!-- <div v-else class="nickname"> 点击登录</div> -->
         </div>

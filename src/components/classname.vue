@@ -1,5 +1,7 @@
 <template>
   <div class="nickname" :class="type"><i slot="icon" :class="iconname" class="iconfont"></i>
+    {{ classname}}
+  <!-- {{ classname=='游客'?'': classname}} -->
     <slot></slot>
   </div>
 </template>
@@ -13,12 +15,19 @@
       },
       classname: {
         type: String,
-        default: '黄金会员'
+        default: ''
       },
     },
     computed: {
       iconname() {
-        return 'icon-canpinhuihuiyuanv' + Number(this.level)
+          if(this.level == 1) {
+              return 'icon-huiyuanfuwu'
+          }else if(this.level ==2) {
+              return 'icon-zuanshi'
+          }else if (this.level ==3) {
+              return 'icon-huangguan'
+          }
+        // return 'icon-canpinhuihuiyuanv' + Number(this.level)
       },
       type() {
         return 'v' + this.level
