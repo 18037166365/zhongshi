@@ -57,7 +57,7 @@
     } from '../api/index.js'
     import Classname from '../components/classname.vue'
     import { getIndex } from '../config/util.js'
-import { setTimeout } from 'timers';
+
     const PAGE_SIZE = 10;
     export default {
         components: {
@@ -92,8 +92,8 @@ import { setTimeout } from 'timers';
                 })
             },
             _getMyitem() {
-                let promise = this.type === 1 ? 
-                    getIndirectRecommended({page: this.page}) : 
+                let promise = this.type === 1 ?
+                    getIndirectRecommended({page: this.page}) :
                     getDirectlyRecommended({page: this.page});
                 this.$loading.show();
                 return promise.then(res => {
@@ -111,7 +111,7 @@ import { setTimeout } from 'timers';
                 let boxHeight = orderDom.clientHeight;
                 let scrollTop =  document.documentElement.scrollTop || document.body.scrollTop;
                 let offset = boxHeight + orderDom.offsetTop - scrollTop - this.height;
-                if (offset == 0 && this.canBePullDown) {
+                if (offset <= 0 && this.canBePullDown) {
                     console.log(offset)
                     this.canBePullDown = false;
                     this.page++;
