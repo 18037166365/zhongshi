@@ -57,7 +57,6 @@
     } from '../api/index.js'
     import Classname from '../components/classname.vue'
     import { getIndex } from '../config/util.js'
-
     const PAGE_SIZE = 10;
     export default {
         components: {
