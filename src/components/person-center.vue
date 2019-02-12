@@ -4,11 +4,12 @@
       <div class="head-img">
         <img v-if="userInfo.headimguri" :src="userInfo.headimguri" alt="">
         <div class="nick">
-          <!-- <Classname v-if="userInfo.nickname" :level="userInfo.class" :classname="userInfo.class_text"> -->
-          <Classname v-if="userInfo.nickname" :level="3" classname="至尊会员">
+          <Classname v-if="userInfo.nickname" :level="userInfo.class" :classname="userInfo.class_text">
+          <!-- <Classname v-if="userInfo.nickname" :level="3" classname="至尊会员"> -->
               <p class="nickname">{{ userInfo.nickname }}</p>
           </Classname>
           <!-- <div v-else class="nickname"> 点击登录</div> -->
+          <div v-else class="nickname" style="color:red;" @click="reload()">点击登录</div>
         </div>
       </div>
       <!-- <img src="../assets/img/erweima.png" alt="二维码" class="qrcode" @click="openEwm"> -->
@@ -89,6 +90,9 @@ import { userInfo } from 'os';
       EwmDialog
     },
     methods: {
+        reload() {
+            window.location.reload()
+        },
         openEwm() {
             if(this.userInfo.class>0){
                 this.ewmVisible = true
