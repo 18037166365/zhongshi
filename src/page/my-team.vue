@@ -57,6 +57,7 @@
     } from '../api/index.js'
     import Classname from '../components/classname.vue'
     import { getIndex } from '../config/util.js'
+import { setTimeout } from 'timers';
     const PAGE_SIZE = 10;
     export default {
         components: {
@@ -74,8 +75,7 @@
                 teamList: [],
                 canBePullDown: true,
                 page: 1,
-                height: null,
-                type: 0
+                height: null
             }
         },
         methods: {
@@ -83,56 +83,46 @@
                 console.log('this.pickerValue: ', this.pickerValue[0]);
             },
             onItemClick(index) {
-                this.type= index
-                this.page =1
-                this.teamList= []
-                this.canBePullDown =true
-                this.getListSingle()
+                this.type = index;
+                this.teamList = [];
+                document.documentElement.scrollTop = document.body.scrollTop = 0;
+                setTimeout(_ => {
+                    this.page = 1;
+                    this.getListSingle()
+                })
             },
-            getMyitem() {
-                let promise = this.type === 1 ? getIndirectRecommended({page: this.page}) : getDirectlyRecommended({page: this.page});
+            _getMyitem() {
+                let promise = this.type === 1 ? 
+                    getIndirectRecommended({page: this.page}) : 
+                    getDirectlyRecommended({page: this.page});
                 this.$loading.show();
-                return  promise.then(res => {
-                    console.log('promise_res: ', res);
-                    // this.teamList = res.data.list
+                return promise.then(res => {
                     if (res.data.list.length >= PAGE_SIZE) {
                         this.canBePullDown = true
                     }
-                    console.log('res.data.list: ', res.data.list )
                     return res.data.list
-                })
-                .then(_ => {
+                }).then(_ => {
                     this.$loading.hide();
                     return _
-                })
-                .catch(_ => this.$loading.hide())
+                }).catch(_ => this.$loading.hide())
             },
              _scrollFn() {
-                 console.log('__scrollFn')
                 let orderDom = this.$refs.list;
-
                 let boxHeight = orderDom.clientHeight;
-                let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+                let scrollTop =  document.documentElement.scrollTop || document.body.scrollTop;
                 let offset = boxHeight + orderDom.offsetTop - scrollTop - this.height;
-                console.log('this.height: ', this.height);
-                console.log('scrollTop: ', scrollTop);
-                console.log('boxHeight: ', boxHeight);
-                console.log('orderDom.offsetTop: ', orderDom.offsetTop);
-                console.log('canBePullDown: ', this.canBePullDown);
-                console.log('offset: ', offset);
-                if (offset <= 0 && this.canBePullDown) {
+                if (offset == 0 && this.canBePullDown) {
+                    console.log(offset)
                     this.canBePullDown = false;
                     this.page++;
-                    this.getMyitem().then(respond => {
-                        console.log('respond: ', respond);
+                    this._getMyitem().then(respond => {
                         if (!respond) return;
                         this.teamList = [...this.teamList, ...respond]
                     })
                 }
             },
             getListSingle() {
-                this.getMyitem().then(respond => {
-                    console.log('created: respond: ', respond);
+                this._getMyitem().then(respond => {
                     if (!respond) return
                     this.teamList = respond
                 })
@@ -156,7 +146,6 @@
             this.page = 1;
             this.getListSingle()
             document.addEventListener('scroll', this._scrollFn)
-            // this.getMyitem(0)
         },
          beforeRouteLeave(to, from, next) {
             document.removeEventListener('scroll', this._scrollFn);
