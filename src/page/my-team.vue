@@ -110,7 +110,7 @@
                 let boxHeight = orderDom.clientHeight;
                 let scrollTop =  document.documentElement.scrollTop || document.body.scrollTop;
                 let offset = boxHeight + orderDom.offsetTop - scrollTop - this.height;
-                if (offset <= 0 && this.canBePullDown) {
+                if (offset <= 10 && this.canBePullDown) {
                     console.log(offset)
                     this.canBePullDown = false;
                     this.page++;
