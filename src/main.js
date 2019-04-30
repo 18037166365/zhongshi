@@ -8,7 +8,7 @@ import './style/iconfont.css'
 import './style/iconfont.js'
 import './style/iconfont.svg'
 import Home from './components/HelloFromVux'
-import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin } from 'vux';
+import { LoadingPlugin, ToastPlugin, DatetimePlugin, AlertPlugin  } from 'vux';
 import { TransferDom } from 'vux'
 import './style/index.scss';
 import 'amfe-flexible'

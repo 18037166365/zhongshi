@@ -3,7 +3,7 @@
     <div class="card-wrap">
       <div class="card-item" v-for="item in listFilter" :key="item.id" >
         <div class="title">
-          <div class="code">订单编号: {{ item.order_no }}</div>
+          <div class="code" @click="alertFn(item)">订单编号: {{ item.order_no }}</div>
           <div class="status">{{item.send_statu=='0'? '待发货': '已发货'}}</div>
         </div>
         <div class="item-content">
@@ -56,6 +56,16 @@ import { XDialog,  XButton} from 'vux'
       }
     },
     methods: {
+        alertFn(item) {
+            let h = this.$createElement
+            let contentStr = item.send_statu === 1 ?
+            `您的卡号是: ${item.member_no || '--'}<br>您的激活码是: ${item.active_code || '--'}` 
+            : '发货后才能查看激活码';
+            this.$vux.alert.show({
+                title: '提示',
+                content: contentStr,
+            })
+        },
       activatepen(item) {
         if(this.$route.path == '/mycard') {
           // this.dialogVisible= true;

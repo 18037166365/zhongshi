@@ -186,7 +186,7 @@
                     context.fillStyle = '#000';
                     context.fillText(avatarObj.nickName, AVATAR.width + AVATAT_OFFSET_LEFT + 20 ,AVATAT_OFFSET_TOP + AVATAR.height / 2 + 8);
                     context.textAlign = 'center';
-                    context.fillText('扫描上方二维码,购买中食旅游年卡', CANVAS.width / 2 , CANVAS.height - 20 );
+                    context.fillText('扫描上方二维码,购买清视堂旅游年卡', CANVAS.width / 2 , CANVAS.height - 20 );
                     context.drawImage(avatarObj.img, AVATAT_OFFSET_LEFT, AVATAT_OFFSET_TOP, AVATAR.width, AVATAR.height);
                     context.drawImage(qr, (CANVAS.width - QR.width) / 2, 125, QR.width, QR.height);
                     this.img = canvas.toDataURL('image/png');
